@@ -1,0 +1,184 @@
+{
+  "items": [
+    {
+      "id": "poi-001",
+      "name": "滹沱河施工段",
+      "longitude": 114.5149,
+      "latitude": 38.0428,
+      "height": 80,
+      "type": "project",
+      "status": "normal",
+      "description": "模拟施工项目部，用于展示项目图层。"
+    },
+    {
+      "id": "poi-002",
+      "name": "正定新区工点",
+      "longitude": 114.5702,
+      "latitude": 38.1478,
+      "height": 70,
+      "type": "project",
+      "status": "warning",
+      "description": "模拟在建工点，状态为提醒。"
+    },
+    {
+      "id": "poi-003",
+      "name": "栾城北项目",
+      "longitude": 114.6196,
+      "latitude": 37.9026,
+      "height": 65,
+      "type": "project",
+      "status": "normal",
+      "description": "模拟南部施工项目。"
+    },
+    {
+      "id": "poi-004",
+      "name": "高新区入口摄像头",
+      "longitude": 114.4821,
+      "latitude": 38.0284,
+      "height": 55,
+      "type": "camera",
+      "status": "normal",
+      "description": "模拟道路入口视频点。"
+    },
+    {
+      "id": "poi-005",
+      "name": "中山路摄像头",
+      "longitude": 114.5088,
+      "latitude": 38.0456,
+      "height": 50,
+      "type": "camera",
+      "status": "offline",
+      "description": "模拟离线摄像头。"
+    },
+    {
+      "id": "poi-006",
+      "name": "裕华路摄像头",
+      "longitude": 114.5312,
+      "latitude": 38.0261,
+      "height": 52,
+      "type": "camera",
+      "status": "normal",
+      "description": "模拟城区监控点。"
+    },
+    {
+      "id": "poi-007",
+      "name": "基坑位移告警",
+      "longitude": 114.5215,
+      "latitude": 38.0512,
+      "height": 45,
+      "type": "alert",
+      "status": "alarm",
+      "description": "模拟高等级位移告警。"
+    },
+    {
+      "id": "poi-008",
+      "name": "围挡倾斜告警",
+      "longitude": 114.4984,
+      "latitude": 38.0338,
+      "height": 40,
+      "type": "alert",
+      "status": "alarm",
+      "description": "模拟围挡倾斜告警点。"
+    },
+    {
+      "id": "poi-009",
+      "name": "扬尘超标提醒",
+      "longitude": 114.5458,
+      "latitude": 38.0189,
+      "height": 42,
+      "type": "alert",
+      "status": "warning",
+      "description": "模拟扬尘监测提醒。"
+    },
+    {
+      "id": "poi-010",
+      "name": "桥梁应力监测",
+      "longitude": 114.5033,
+      "latitude": 38.0614,
+      "height": 48,
+      "type": "monitor",
+      "status": "normal",
+      "description": "模拟桥梁传感器。"
+    },
+    {
+      "id": "poi-011",
+      "name": "边坡监测站",
+      "longitude": 114.5604,
+      "latitude": 38.0722,
+      "height": 90,
+      "type": "monitor",
+      "status": "warning",
+      "description": "模拟边坡位移监测设备。"
+    },
+    {
+      "id": "poi-012",
+      "name": "水质监测点",
+      "longitude": 114.4786,
+      "latitude": 38.0555,
+      "height": 35,
+      "type": "monitor",
+      "status": "normal",
+      "description": "模拟河道水质监测。"
+    },
+    {
+      "id": "poi-013",
+      "name": "巡检车-01",
+      "longitude": 114.5259,
+      "latitude": 38.0388,
+      "height": 30,
+      "type": "vehicle",
+      "status": "normal",
+      "description": "模拟巡检车辆当前位置。"
+    },
+    {
+      "id": "poi-014",
+      "name": "物料车-07",
+      "longitude": 114.4922,
+      "latitude": 38.0194,
+      "height": 30,
+      "type": "vehicle",
+      "status": "normal",
+      "description": "模拟物料运输车辆。"
+    },
+    {
+      "id": "poi-015",
+      "name": "应急车-03",
+      "longitude": 114.5521,
+      "latitude": 38.0497,
+      "height": 32,
+      "type": "vehicle",
+      "status": "warning",
+      "description": "模拟应急车辆待命点。"
+    },
+    {
+      "id": "poi-016",
+      "name": "藁城东工区",
+      "longitude": 114.8296,
+      "latitude": 38.0332,
+      "height": 60,
+      "type": "project",
+      "status": "normal",
+      "description": "模拟东部施工工区。"
+    },
+    {
+      "id": "poi-017",
+      "name": "机场路摄像头",
+      "longitude": 114.6964,
+      "latitude": 38.1288,
+      "height": 55,
+      "type": "camera",
+      "status": "normal",
+      "description": "模拟机场路视频点。"
+    },
+    {
+      "id": "poi-018",
+      "name": "塔吊限位告警",
+      "longitude": 114.5168,
+      "latitude": 38.0411,
+      "height": 120,
+      "type": "alert",
+      "status": "alarm",
+      "description": "模拟塔机限位告警。"
+    }
+  ]
+}

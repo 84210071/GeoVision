@@ -1,0 +1,314 @@
+{
+  "vehicleId": "vehicle-patrol-01",
+  "name": "巡检车-01",
+  "points": [
+    {
+      "longitude": 114.5149,
+      "latitude": 38.0428,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:00:00Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 114.5702,
+      "latitude": 38.1478,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:00:14Z",
+      "speed": 19.6
+    },
+    {
+      "longitude": 114.67515,
+      "latitude": 38.23985,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:00:28Z",
+      "speed": 21.2
+    },
+    {
+      "longitude": 114.7801,
+      "latitude": 38.3319,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:00:42Z",
+      "speed": 22.8
+    },
+    {
+      "longitude": 114.88505,
+      "latitude": 38.42395,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:00:56Z",
+      "speed": 24.4
+    },
+    {
+      "longitude": 114.99,
+      "latitude": 38.516,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:01:10Z",
+      "speed": 26.0
+    },
+    {
+      "longitude": 115.0685,
+      "latitude": 38.6065,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:01:24Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 115.147,
+      "latitude": 38.697,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:01:38Z",
+      "speed": 19.6
+    },
+    {
+      "longitude": 115.3055,
+      "latitude": 38.7855,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:01:52Z",
+      "speed": 21.2
+    },
+    {
+      "longitude": 115.464,
+      "latitude": 38.874,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:02:06Z",
+      "speed": 22.8
+    },
+    {
+      "longitude": 115.662,
+      "latitude": 38.907,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:02:20Z",
+      "speed": 24.4
+    },
+    {
+      "longitude": 115.86,
+      "latitude": 38.94,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:02:34Z",
+      "speed": 26.0
+    },
+    {
+      "longitude": 115.9795,
+      "latitude": 38.823,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:02:48Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 116.099,
+      "latitude": 38.706,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:03:02Z",
+      "speed": 19.6
+    },
+    {
+      "longitude": 116.099,
+      "latitude": 38.576,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:03:16Z",
+      "speed": 21.2
+    },
+    {
+      "longitude": 116.099,
+      "latitude": 38.446,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:03:30Z",
+      "speed": 22.8
+    },
+    {
+      "longitude": 116.284,
+      "latitude": 38.4105,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:03:44Z",
+      "speed": 24.4
+    },
+    {
+      "longitude": 116.469,
+      "latitude": 38.375,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:03:58Z",
+      "speed": 26.0
+    },
+    {
+      "longitude": 116.654,
+      "latitude": 38.3395,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:04:12Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 116.839,
+      "latitude": 38.304,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:04:26Z",
+      "speed": 19.6
+    },
+    {
+      "longitude": 116.7085,
+      "latitude": 38.189,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:04:40Z",
+      "speed": 21.2
+    },
+    {
+      "longitude": 116.578,
+      "latitude": 38.074,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:04:54Z",
+      "speed": 22.8
+    },
+    {
+      "longitude": 116.426667,
+      "latitude": 38.018167,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:05:08Z",
+      "speed": 24.4
+    },
+    {
+      "longitude": 116.275333,
+      "latitude": 37.962333,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:05:22Z",
+      "speed": 26.0
+    },
+    {
+      "longitude": 116.124,
+      "latitude": 37.9065,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:05:36Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 115.972667,
+      "latitude": 37.850667,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:05:50Z",
+      "speed": 19.6
+    },
+    {
+      "longitude": 115.821333,
+      "latitude": 37.794833,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:06:04Z",
+      "speed": 21.2
+    },
+    {
+      "longitude": 115.67,
+      "latitude": 37.739,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:06:18Z",
+      "speed": 22.8
+    },
+    {
+      "longitude": 115.579,
+      "latitude": 37.551,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:06:32Z",
+      "speed": 24.4
+    },
+    {
+      "longitude": 115.484,
+      "latitude": 37.455,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:06:46Z",
+      "speed": 26.0
+    },
+    {
+      "longitude": 115.389,
+      "latitude": 37.359,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:07:00Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 115.2415,
+      "latitude": 37.3105,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:07:14Z",
+      "speed": 19.6
+    },
+    {
+      "longitude": 115.094,
+      "latitude": 37.262,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:07:28Z",
+      "speed": 21.2
+    },
+    {
+      "longitude": 114.9465,
+      "latitude": 37.2135,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:07:42Z",
+      "speed": 22.8
+    },
+    {
+      "longitude": 114.799,
+      "latitude": 37.165,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:07:56Z",
+      "speed": 24.4
+    },
+    {
+      "longitude": 114.6515,
+      "latitude": 37.1165,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:08:10Z",
+      "speed": 26.0
+    },
+    {
+      "longitude": 114.504,
+      "latitude": 37.068,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:08:24Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 114.508,
+      "latitude": 37.1775,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:08:38Z",
+      "speed": 19.6
+    },
+    {
+      "longitude": 114.512,
+      "latitude": 37.287,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:08:52Z",
+      "speed": 21.2
+    },
+    {
+      "longitude": 114.5455,
+      "latitude": 37.4515,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:09:06Z",
+      "speed": 22.8
+    },
+    {
+      "longitude": 114.579,
+      "latitude": 37.616,
+      "height": 48.0,
+      "timestamp": "2026-09-14T08:09:20Z",
+      "speed": 24.4
+    },
+    {
+      "longitude": 114.557633,
+      "latitude": 37.758267,
+      "height": 50.0,
+      "timestamp": "2026-09-14T08:09:34Z",
+      "speed": 26.0
+    },
+    {
+      "longitude": 114.536267,
+      "latitude": 37.900533,
+      "height": 52.0,
+      "timestamp": "2026-09-14T08:09:48Z",
+      "speed": 18.0
+    },
+    {
+      "longitude": 114.5149,
+      "latitude": 38.0428,
+      "height": 54.0,
+      "timestamp": "2026-09-14T08:10:02Z",
+      "speed": 19.6
+    }
+  ]
+}
