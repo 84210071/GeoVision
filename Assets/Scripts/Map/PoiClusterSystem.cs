@@ -10,13 +10,16 @@ namespace GeoVision.Map
     /// </summary>
     public class PoiClusterSystem : MonoBehaviour
     {
-        [SerializeField] private float clusterHeightMeters = 90000f;
+        [SerializeField] private float clusterOnHeightMeters = 95000f;
+        [SerializeField] private float clusterOffHeightMeters = 85000f;
 
         private readonly List<GeoPoi> _pois = new List<GeoPoi>();
         private GameObject _clusterRoot;
         private CesiumGlobeAnchor _clusterAnchor;
         private CesiumGlobeAnchor _cameraAnchor;
         private bool _clusterMode;
+        private bool _poiLayerVisible = true;
+        private bool _alertLayerVisible = true;
         private GUIStyle _labelStyle;
 
         public void SetPois(List<GeoPoi> pois)
@@ -28,7 +31,16 @@ namespace GeoVision.Map
             }
 
             EnsureClusterMarker();
-            Debug.Log("PoiClusterSystem: tracking " + _pois.Count + " POIs. Cluster when camera height > " + clusterHeightMeters + " m.");
+            Debug.Log(
+                "PoiClusterSystem: tracking " + _pois.Count +
+                " POIs. Cluster ON > " + clusterOnHeightMeters +
+                " m, OFF < " + clusterOffHeightMeters + " m.");
+        }
+
+        public void SetLayerVisible(bool poiVisible, bool alertVisible)
+        {
+            _poiLayerVisible = poiVisible;
+            _alertLayerVisible = alertVisible;
         }
 
         private void LateUpdate()
@@ -44,27 +56,42 @@ namespace GeoVision.Map
             }
 
             double cameraHeight = _cameraAnchor != null ? _cameraAnchor.longitudeLatitudeHeight.z : 0.0;
-            bool clusterMode = cameraHeight > clusterHeightMeters;
-            if (clusterMode != _clusterMode)
+            bool nextCluster = _clusterMode;
+            if (cameraHeight > clusterOnHeightMeters)
             {
-                _clusterMode = clusterMode;
-                Debug.Log("PoiClusterSystem: " + (clusterMode ? "cluster ON" : "cluster OFF") + " cameraHeight=" + cameraHeight.ToString("F0"));
+                nextCluster = true;
+            }
+            else if (cameraHeight < clusterOffHeightMeters)
+            {
+                nextCluster = false;
             }
 
+            if (nextCluster != _clusterMode)
+            {
+                _clusterMode = nextCluster;
+                Debug.Log("PoiClusterSystem: " + (_clusterMode ? "cluster ON" : "cluster OFF") + " cameraHeight=" + cameraHeight.ToString("F0"));
+            }
+
+            bool showCluster = _poiLayerVisible && _clusterMode;
             for (int i = 0; i < _pois.Count; i++)
             {
-                if (_pois[i] != null)
+                GeoPoi poi = _pois[i];
+                if (poi == null)
                 {
-                    _pois[i].SetVisible(!clusterMode);
+                    continue;
                 }
+
+                bool isAlert = string.Equals(poi.Type, "alert", System.StringComparison.OrdinalIgnoreCase);
+                bool showPoi = _poiLayerVisible && !_clusterMode && (!isAlert || _alertLayerVisible);
+                poi.SetVisible(showPoi);
             }
 
             if (_clusterRoot != null)
             {
-                _clusterRoot.SetActive(clusterMode);
+                _clusterRoot.SetActive(showCluster);
             }
 
-            if (clusterMode)
+            if (showCluster)
             {
                 UpdateClusterPose();
             }

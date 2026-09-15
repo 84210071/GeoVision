@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,11 +11,30 @@ namespace GeoVision.Map
         private IGeoSelectable _current;
         private GeoInfoPanel _infoPanel;
 
+        public event Action<IGeoSelectable> SelectionChanged;
+
         public IGeoSelectable Current => _current;
 
         public void Bind(GeoInfoPanel infoPanel)
         {
+            if (_infoPanel != null)
+            {
+                _infoPanel.Closed -= OnPanelClosed;
+            }
+
             _infoPanel = infoPanel;
+            if (_infoPanel != null)
+            {
+                _infoPanel.Closed += OnPanelClosed;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_infoPanel != null)
+            {
+                _infoPanel.Closed -= OnPanelClosed;
+            }
         }
 
         private void Update()
@@ -77,6 +97,8 @@ namespace GeoVision.Map
             {
                 _infoPanel.Show(selectable);
             }
+
+            RaiseSelectionChanged();
         }
 
         public void ClearSelection()
@@ -90,6 +112,27 @@ namespace GeoVision.Map
             if (_infoPanel != null)
             {
                 _infoPanel.Hide();
+            }
+
+            RaiseSelectionChanged();
+        }
+
+        private void OnPanelClosed()
+        {
+            if (_current != null)
+            {
+                _current.SetHighlighted(false);
+                _current = null;
+            }
+
+            RaiseSelectionChanged();
+        }
+
+        private void RaiseSelectionChanged()
+        {
+            if (SelectionChanged != null)
+            {
+                SelectionChanged(_current);
             }
         }
     }

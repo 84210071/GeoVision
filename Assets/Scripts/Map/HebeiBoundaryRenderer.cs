@@ -16,8 +16,21 @@ namespace GeoVision.Map
         private readonly List<LineRenderer> _lines = new List<LineRenderer>();
         private readonly List<Vector3[]> _buffers = new List<Vector3[]>();
         private CesiumGeoreference _georeference;
+        private bool _visible = true;
 
         public int RingCount => _rings.Count;
+
+        public void SetVisible(bool visible)
+        {
+            _visible = visible;
+            for (int i = 0; i < _lines.Count; i++)
+            {
+                if (_lines[i] != null)
+                {
+                    _lines[i].gameObject.SetActive(visible);
+                }
+            }
+        }
 
         public void Build(CesiumGeoreference georeference)
         {
@@ -53,7 +66,10 @@ namespace GeoVision.Map
 
         private void LateUpdate()
         {
-            RefreshPositions();
+            if (_visible)
+            {
+                RefreshPositions();
+            }
         }
 
         private void RefreshPositions()
@@ -105,7 +121,7 @@ namespace GeoVision.Map
                 }
             }
 
-            return (float)math.clamp(height * 0.012, 2500.0, 40000.0);
+            return (float)math.clamp(height * 0.0085, 1800.0, 28000.0);
         }
 
         private LineRenderer CreateLine(int pointCount, bool primary)
@@ -123,8 +139,8 @@ namespace GeoVision.Map
             line.alignment = LineAlignment.View;
             line.widthMultiplier = 1f;
             Color outline = primary
-                ? new Color(0.15f, 0.95f, 1f, 1f)
-                : new Color(0.45f, 0.85f, 1f, 0.85f);
+                ? new Color(0.20f, 0.78f, 0.88f, 0.72f)
+                : new Color(0.40f, 0.75f, 0.88f, 0.50f);
             line.material = GeoOverlayMaterial.Create(outline, Texture2D.whiteTexture);
             return line;
         }

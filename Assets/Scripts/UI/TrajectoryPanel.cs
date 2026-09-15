@@ -5,12 +5,22 @@ namespace GeoVision.Map
 {
     public class TrajectoryPanel : MonoBehaviour
     {
+        [SerializeField] private Button playButton;
+        [SerializeField] private Button pauseButton;
+        [SerializeField] private Button stopButton;
+        [SerializeField] private Button speed1Button;
+        [SerializeField] private Button speed2Button;
+        [SerializeField] private Button speed4Button;
+        [SerializeField] private Toggle followToggle;
+        [SerializeField] private Text timeText;
+        [SerializeField] private Text speedText;
+        [SerializeField] private Slider progressBar;
+        [SerializeField] private Color speedIdleColor = new Color(0.05f, 0.16f, 0.28f, 0.92f);
+        [SerializeField] private Color speedActiveColor = new Color(0.12f, 0.42f, 0.58f, 0.95f);
+
         private TrajectoryPlayer _player;
         private CameraFollowController _follow;
-        private Slider _slider;
-        private Text _timeLabel;
-        private Text _speedLabel;
-        private Toggle _followToggle;
+        private bool _wired;
         private bool _suppressSlider;
 
         public void Bind(TrajectoryPlayer player, CameraFollowController follow)
@@ -19,45 +29,17 @@ namespace GeoVision.Map
             _follow = follow;
             if (_player != null)
             {
+                _player.ProgressChanged -= Refresh;
                 _player.ProgressChanged += Refresh;
             }
-        }
 
-        public void Build(Transform canvas)
-        {
-            GameObject root = UiWidgets.CreatePanel(canvas, "TrajectoryPanel", new Vector2(0f, 18f), new Vector2(920f, 92f), TextAnchor.LowerCenter);
-            RectTransform rect = root.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.5f, 0f);
-            rect.anchorMax = new Vector2(0.5f, 0f);
-            rect.pivot = new Vector2(0.5f, 0f);
-            rect.anchoredPosition = new Vector2(0f, 18f);
-
-            Button play = UiWidgets.CreateButton(root.transform, "Play", new Vector2(16f, 44f), new Vector2(72f, 32f), new Color(0.18f, 0.7f, 0.32f, 1f));
-            Button pause = UiWidgets.CreateButton(root.transform, "Pause", new Vector2(96f, 44f), new Vector2(72f, 32f), new Color(0.75f, 0.55f, 0.12f, 1f));
-            Button stop = UiWidgets.CreateButton(root.transform, "Stop", new Vector2(176f, 44f), new Vector2(72f, 32f), new Color(0.75f, 0.22f, 0.18f, 1f));
-            play.onClick.AddListener(() => { if (_player != null) { _player.Play(); } });
-            pause.onClick.AddListener(() => { if (_player != null) { _player.Pause(); } });
-            stop.onClick.AddListener(() => { if (_player != null) { _player.Stop(); } });
-
-            Button x1 = UiWidgets.CreateButton(root.transform, "1x", new Vector2(264f, 44f), new Vector2(48f, 32f), new Color(0.25f, 0.35f, 0.5f, 1f));
-            Button x2 = UiWidgets.CreateButton(root.transform, "2x", new Vector2(318f, 44f), new Vector2(48f, 32f), new Color(0.25f, 0.35f, 0.5f, 1f));
-            Button x4 = UiWidgets.CreateButton(root.transform, "4x", new Vector2(372f, 44f), new Vector2(48f, 32f), new Color(0.25f, 0.35f, 0.5f, 1f));
-            x1.onClick.AddListener(() => { if (_player != null) { _player.SetPlaybackSpeed(1f); Refresh(); } });
-            x2.onClick.AddListener(() => { if (_player != null) { _player.SetPlaybackSpeed(2f); Refresh(); } });
-            x4.onClick.AddListener(() => { if (_player != null) { _player.SetPlaybackSpeed(4f); Refresh(); } });
-
-            _followToggle = UiWidgets.CreateToggle(root.transform, "Follow Vehicle", new Vector2(440f, 44f), new Vector2(200f, 32f));
-            _followToggle.onValueChanged.AddListener(OnFollowChanged);
             if (_follow != null)
             {
+                _follow.FollowingChanged -= OnFollowExternalChanged;
                 _follow.FollowingChanged += OnFollowExternalChanged;
             }
 
-            _timeLabel = UiWidgets.CreateLabel(root.transform, "Time --:--:--", 14, FontStyle.Bold, new Vector2(650f, -12f), new Vector2(140f, 24f));
-            _speedLabel = UiWidgets.CreateLabel(root.transform, "Speed -- km/h", 14, FontStyle.Bold, new Vector2(790f, -12f), new Vector2(120f, 24f));
-
-            _slider = UiWidgets.CreateSlider(root.transform, new Vector2(16f, 10f), new Vector2(888f, 24f));
-            _slider.onValueChanged.AddListener(OnSliderChanged);
+            WireEvents();
             Refresh();
         }
 
@@ -74,11 +56,69 @@ namespace GeoVision.Map
             }
         }
 
+        private void WireEvents()
+        {
+            if (_wired)
+            {
+                return;
+            }
+
+            _wired = true;
+            if (playButton != null)
+            {
+                playButton.onClick.AddListener(() => { if (_player != null) { _player.Play(); } });
+            }
+
+            if (pauseButton != null)
+            {
+                pauseButton.onClick.AddListener(() => { if (_player != null) { _player.Pause(); } });
+            }
+
+            if (stopButton != null)
+            {
+                stopButton.onClick.AddListener(() => { if (_player != null) { _player.Stop(); } });
+            }
+
+            if (speed1Button != null)
+            {
+                speed1Button.onClick.AddListener(() => SetSpeed(1f));
+            }
+
+            if (speed2Button != null)
+            {
+                speed2Button.onClick.AddListener(() => SetSpeed(2f));
+            }
+
+            if (speed4Button != null)
+            {
+                speed4Button.onClick.AddListener(() => SetSpeed(4f));
+            }
+
+            if (followToggle != null)
+            {
+                followToggle.onValueChanged.AddListener(OnFollowChanged);
+            }
+
+            if (progressBar != null)
+            {
+                progressBar.onValueChanged.AddListener(OnSliderChanged);
+            }
+        }
+
+        private void SetSpeed(float speed)
+        {
+            if (_player != null)
+            {
+                _player.SetPlaybackSpeed(speed);
+                Refresh();
+            }
+        }
+
         private void OnFollowExternalChanged(bool on)
         {
-            if (_followToggle != null)
+            if (followToggle != null)
             {
-                _followToggle.SetIsOnWithoutNotify(on);
+                followToggle.SetIsOnWithoutNotify(on);
             }
         }
 
@@ -108,20 +148,38 @@ namespace GeoVision.Map
             }
 
             _suppressSlider = true;
-            if (_slider != null)
+            if (progressBar != null)
             {
-                _slider.value = _player.NormalizedProgress;
+                progressBar.value = _player.NormalizedProgress;
             }
 
             _suppressSlider = false;
-            if (_timeLabel != null)
+            if (timeText != null)
             {
-                _timeLabel.text = "Time " + _player.FormatCurrentTimestamp();
+                timeText.text = "时间  " + _player.FormatCurrentTimestamp();
             }
 
-            if (_speedLabel != null)
+            if (speedText != null)
             {
-                _speedLabel.text = "Speed " + (_player.CurrentSpeed * 3.6).ToString("F1") + " km/h  " + _player.PlaybackSpeed.ToString("0") + "x";
+                speedText.text = "速度  " + (_player.CurrentSpeed * 3.6).ToString("F1") + " km/h";
+            }
+
+            Highlight(speed1Button, Mathf.Abs(_player.PlaybackSpeed - 1f) < 0.01f);
+            Highlight(speed2Button, Mathf.Abs(_player.PlaybackSpeed - 2f) < 0.01f);
+            Highlight(speed4Button, Mathf.Abs(_player.PlaybackSpeed - 4f) < 0.01f);
+        }
+
+        private void Highlight(Button button, bool active)
+        {
+            if (button == null)
+            {
+                return;
+            }
+
+            Image image = button.GetComponent<Image>();
+            if (image != null)
+            {
+                image.color = active ? speedActiveColor : speedIdleColor;
             }
         }
     }

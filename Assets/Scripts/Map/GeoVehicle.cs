@@ -53,6 +53,21 @@ namespace GeoVision.Map
             _anchor.rotationEastUpNorth = Quaternion.Euler(0f, yawDegrees, 0f);
         }
 
+        public void SetVisible(bool visible)
+        {
+            Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                renderers[i].enabled = visible;
+            }
+
+            Collider[] colliders = GetComponentsInChildren<Collider>(true);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                colliders[i].enabled = visible;
+            }
+        }
+
         public void SetHighlighted(bool highlighted)
         {
             if (_renderers == null)

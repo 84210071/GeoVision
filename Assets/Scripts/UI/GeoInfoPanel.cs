@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,57 +8,87 @@ namespace GeoVision.Map
     {
         private const double LocateHeightMeters = 2200.0;
 
-        private GameObject _root;
-        private Text _body;
+        public event Action Closed;
+
+        [SerializeField] private GameObject root;
+        [SerializeField] private Text nameText;
+        [SerializeField] private Text typeText;
+        [SerializeField] private Text statusText;
+        [SerializeField] private Text coordText;
+        [SerializeField] private Text descText;
+        [SerializeField] private Button closeButton;
+        [SerializeField] private Button locateButton;
+
         private IGeoSelectable _current;
         private GeoFlyToController _flyTo;
+        private bool _wired;
+
+        private void Awake()
+        {
+            WireButtons();
+            Hide();
+        }
 
         public void Bind(GeoFlyToController flyTo)
         {
             _flyTo = flyTo;
-        }
-
-        public void Build(Transform canvas)
-        {
-            _root = UiWidgets.CreatePanel(canvas, "PoiInfoPanel", new Vector2(-24f, -24f), new Vector2(360f, 280f), TextAnchor.UpperRight);
-            UiWidgets.CreateLabel(_root.transform, "POI 信息", 18, FontStyle.Bold, new Vector2(16f, -12f), new Vector2(240f, 28f));
-            _body = UiWidgets.CreateLabel(_root.transform, "", 15, FontStyle.Normal, new Vector2(16f, -44f), new Vector2(328f, 170f));
-            _body.alignment = TextAnchor.UpperLeft;
-            Button locate = UiWidgets.CreateButton(_root.transform, "定位", new Vector2(16f, 16f), new Vector2(120f, 36f), new Color(0.15f, 0.55f, 0.95f, 1f));
-            locate.onClick.AddListener(OnLocateClicked);
-            Hide();
+            WireButtons();
         }
 
         public void Show(IGeoSelectable selectable)
         {
             _current = selectable;
-            if (_root != null)
+            if (root != null)
             {
-                _root.SetActive(true);
+                root.SetActive(true);
             }
 
-            if (_body == null || selectable == null)
+            if (selectable == null)
             {
                 return;
             }
 
-            _body.text =
-                "id: " + selectable.Id + "\n" +
-                "name: " + selectable.DisplayName + "\n" +
-                "type: " + selectable.Type + "\n" +
-                "status: " + selectable.Status + "\n" +
-                "lon: " + selectable.Longitude.ToString("F6") + "\n" +
-                "lat: " + selectable.Latitude.ToString("F6") + "\n" +
-                "height: " + selectable.Height.ToString("F1") + " m\n" +
-                selectable.Description;
+            Set(nameText, selectable.DisplayName);
+            Set(typeText, FormatType(selectable.Type));
+            Set(statusText, FormatStatus(selectable.Status));
+            Set(coordText, selectable.Longitude.ToString("F6") + "  ,  " + selectable.Latitude.ToString("F6"));
+            Set(descText, string.IsNullOrEmpty(selectable.Description) ? "暂无描述" : selectable.Description);
         }
 
         public void Hide()
         {
             _current = null;
-            if (_root != null)
+            if (root != null)
             {
-                _root.SetActive(false);
+                root.SetActive(false);
+            }
+        }
+
+        private void WireButtons()
+        {
+            if (_wired)
+            {
+                return;
+            }
+
+            _wired = true;
+            if (closeButton != null)
+            {
+                closeButton.onClick.AddListener(OnCloseClicked);
+            }
+
+            if (locateButton != null)
+            {
+                locateButton.onClick.AddListener(OnLocateClicked);
+            }
+        }
+
+        private void OnCloseClicked()
+        {
+            Hide();
+            if (Closed != null)
+            {
+                Closed();
             }
         }
 
@@ -69,6 +100,50 @@ namespace GeoVision.Map
             }
 
             _flyTo.FlyToSelectable(_current, LocateHeightMeters);
+        }
+
+        private static void Set(Text label, string value)
+        {
+            if (label != null)
+            {
+                label.text = value;
+            }
+        }
+
+        private static string FormatType(string type)
+        {
+            switch (type)
+            {
+                case "project":
+                    return "项目";
+                case "camera":
+                    return "摄像头";
+                case "vehicle":
+                    return "车辆";
+                case "alert":
+                    return "告警点";
+                case "monitor":
+                    return "监测点";
+                default:
+                    return type;
+            }
+        }
+
+        private static string FormatStatus(string status)
+        {
+            switch (status)
+            {
+                case "normal":
+                    return "正常";
+                case "warning":
+                    return "提醒";
+                case "alarm":
+                    return "告警";
+                case "offline":
+                    return "离线";
+                default:
+                    return status;
+            }
         }
     }
 }

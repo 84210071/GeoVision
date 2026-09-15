@@ -15,6 +15,16 @@ namespace GeoVision.Map
         private Vector3[] _buffer;
         private LineRenderer _line;
         private CesiumGeoreference _georeference;
+        private bool _visible = true;
+
+        public void SetVisible(bool visible)
+        {
+            _visible = visible;
+            if (_line != null)
+            {
+                _line.gameObject.SetActive(visible);
+            }
+        }
 
         public void Build(CesiumGeoreference georeference, TrajectoryPoint[] points)
         {
@@ -36,7 +46,10 @@ namespace GeoVision.Map
 
         private void LateUpdate()
         {
-            RefreshPositions();
+            if (_visible)
+            {
+                RefreshPositions();
+            }
         }
 
         private void Densify(TrajectoryPoint[] points)
@@ -82,7 +95,7 @@ namespace GeoVision.Map
                 }
             }
 
-            float width = (float)math.clamp(height * 0.010, 400.0, 18000.0);
+            float width = (float)math.clamp(height * 0.00595, 238.0, 9350.0);
             _line.startWidth = width;
             _line.endWidth = width;
         }
@@ -105,7 +118,7 @@ namespace GeoVision.Map
             _line.receiveShadows = false;
             _line.alignment = LineAlignment.View;
             _line.widthMultiplier = 1f;
-            _line.material = GeoOverlayMaterial.Create(new Color(1f, 0.82f, 0.15f, 0.95f), Texture2D.whiteTexture);
+            _line.material = GeoOverlayMaterial.Create(new Color(1f, 0.78f, 0.18f, 0.78f), Texture2D.whiteTexture);
         }
     }
 }

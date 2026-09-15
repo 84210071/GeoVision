@@ -94,7 +94,15 @@ namespace GeoVision.Core
                 return;
             }
 
-            Canvas canvas = UiWidgets.CreateHudCanvas();
+            GisDashboard dashboard = FindObjectOfType<GisDashboard>();
+            GeoInfoPanel infoPanel = FindObjectOfType<GeoInfoPanel>();
+            TrajectoryPanel trajectoryPanel = FindObjectOfType<TrajectoryPanel>();
+            if (dashboard == null || infoPanel == null || trajectoryPanel == null)
+            {
+                Debug.LogError("MapBootstrap: GisHud is missing from the scene. Place Assets/Prefabs/UI/GisHud.prefab in SampleScene.");
+                return;
+            }
+
             GeoDataService dataService = new GeoDataService();
             TrajectoryData trajectory = dataService.LoadJson<TrajectoryData>(TrajectoryResource);
             if (trajectory == null || trajectory.points == null || trajectory.points.Length < 2)
@@ -144,14 +152,19 @@ namespace GeoVision.Core
 
             flyTo.Bind(cesiumFlyTo, follow);
 
-            GeoInfoPanel infoPanel = GetComponent<GeoInfoPanel>();
-            if (infoPanel == null)
+            PoiSpawner spawner = GetComponent<PoiSpawner>();
+            PoiClusterSystem cluster = GetComponent<PoiClusterSystem>();
+            HebeiBoundaryRenderer boundary = GetComponent<HebeiBoundaryRenderer>();
+
+            LayerManager layers = GetComponent<LayerManager>();
+            if (layers == null)
             {
-                infoPanel = gameObject.AddComponent<GeoInfoPanel>();
+                layers = gameObject.AddComponent<LayerManager>();
             }
 
+            layers.Bind(cluster, boundary, route, vehicle);
+
             infoPanel.Bind(flyTo);
-            infoPanel.Build(canvas.transform);
 
             PickController pick = GetComponent<PickController>();
             if (pick == null)
@@ -160,15 +173,8 @@ namespace GeoVision.Core
             }
 
             pick.Bind(infoPanel);
-
-            TrajectoryPanel trajectoryPanel = GetComponent<TrajectoryPanel>();
-            if (trajectoryPanel == null)
-            {
-                trajectoryPanel = gameObject.AddComponent<TrajectoryPanel>();
-            }
-
+            dashboard.Bind(spawner, layers, player, pick);
             trajectoryPanel.Bind(player, follow);
-            trajectoryPanel.Build(canvas.transform);
         }
 
         private static void FocusHebeiCamera()
